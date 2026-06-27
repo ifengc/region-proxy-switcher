@@ -1,0 +1,8 @@
+# Local agent config
+.claude/settings.local.json
+
+# Editor / OS
+*.swp
+*.swo
+*~
+.DS_Store

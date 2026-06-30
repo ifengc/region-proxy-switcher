@@ -11,13 +11,21 @@ routing through the Exit Proxy.
 _Avoid_: VPN, tunnel client
 
 **Exit Proxy** — the proxy Chrome traffic exits through so sites see a regional
-IP. Runs on a GCP VM in the region's zone.
+IP. Runs on a throwaway cloud instance in the Exit Region (a GCP VM via
+`proxy.sh`, or an AWS EC2 instance via `proxy-aws.sh`).
 _Avoid_: VPN server, gateway
 
-**Exit Region** — the country whose IP you want, mapped to a GCP region (Taiwan
-→ `asia-east1`, Japan → `asia-northeast1`, US → `us-central1`). A parameter,
-never hardcoded. Only one is active at a time; switching means rerunning the
-script. The tunnel always uses the same local SOCKS port, so the extension is
+**Provider** — the cloud that hosts the Exit Proxy for a session: GCP
+(`proxy.sh`) or AWS (`proxy-aws.sh`). Same UX and same local SOCKS port, so the
+Proxy Switcher is provider-agnostic. A given Exit Region resolves to a different
+cloud region per Provider.
+_Avoid_: backend
+
+**Exit Region** — the country whose IP you want, mapped to a cloud region per
+Provider (Taiwan → GCP `asia-east1` / AWS `ap-east-2`; Japan → `asia-northeast1`
+/ `ap-northeast-1`; US → `us-central1` / `us-east-1`). A parameter, never
+hardcoded. Only one is active at a time; switching means rerunning the script.
+The tunnel always uses the same local SOCKS port, so the extension is
 region-agnostic.
 _Avoid_: location, endpoint
 
